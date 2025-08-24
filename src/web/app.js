@@ -1,5 +1,6 @@
 class CodeFlowIDE {
     constructor() {
+        console.log('🔧 CodeFlowIDE constructor called');
         this.mcpServerUrl = 'http://localhost:3001';
         this.websocket = null;
         this.terminal = null;
@@ -11,6 +12,7 @@ class CodeFlowIDE {
         this.networkRequests = [];
         this.activityLog = [];
         
+        console.log('🎯 Starting initialization...');
         this.init();
     }
 
@@ -665,14 +667,19 @@ class CodeFlowIDE {
     }
 
     updateConnectionStatus(status, text) {
+        console.log('🔄 Updating connection status:', status, text);
         const indicator = document.getElementById('connection-indicator');
         const textElement = document.getElementById('connection-text');
         
+        console.log('📍 Elements found - indicator:', !!indicator, 'text:', !!textElement);
+        
         if (indicator) {
             indicator.className = `fas fa-circle ${status}`;
+            console.log('✅ Updated indicator class to:', status);
         }
         if (textElement) {
             textElement.textContent = text;
+            console.log('✅ Updated text to:', text);
         }
     }
 
@@ -696,7 +703,10 @@ class CodeFlowIDE {
 
 // Initialize the IDE when the page loads
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('🚀 CodeFlow IDE JavaScript loaded and executing');
+    console.log('🔗 Initializing CodeFlow IDE...');
     window.codeFlowIDE = new CodeFlowIDE();
+    console.log('✅ CodeFlow IDE initialized');
 });
 
 // Handle page visibility changes

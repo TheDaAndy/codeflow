@@ -53,6 +53,12 @@ class MockMCPServer {
             res.sendFile(path.join(__dirname, '../web/index.html'));
         });
 
+        // Test page for debugging
+        this.app.get('/test', (req, res) => {
+            const path = require('path');
+            res.sendFile(path.join(__dirname, '../web/test.html'));
+        });
+
         // Health check
         this.app.get('/health', (req, res) => {
             res.json({ 

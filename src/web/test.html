@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CodeFlow JavaScript Test</title>
+</head>
+<body>
+    <h1>CodeFlow JavaScript Test</h1>
+    <p id="test-status">JavaScript not loaded</p>
+    <p id="connection-status">Not connected</p>
+    <div id="console-output" style="background: #000; color: #0f0; padding: 10px; margin: 10px 0; font-family: monospace;"></div>
+
+    <script>
+        console.log('🧪 Test JavaScript is loading...');
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🚀 DOM loaded, executing test...');
+            
+            document.getElementById('test-status').textContent = 'JavaScript loaded successfully!';
+            document.getElementById('test-status').style.color = 'green';
+            
+            // Test fetch to health endpoint
+            fetch('http://localhost:3001/health')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('✅ Health check successful:', data);
+                    document.getElementById('connection-status').textContent = 'Connected to server: ' + data.status;
+                    document.getElementById('connection-status').style.color = 'green';
+                    
+                    // Add to console output
+                    const output = document.getElementById('console-output');
+                    output.innerHTML += '✅ Server health: ' + JSON.stringify(data, null, 2) + '<br>';
+                })
+                .catch(error => {
+                    console.error('❌ Health check failed:', error);
+                    document.getElementById('connection-status').textContent = 'Connection failed: ' + error.message;
+                    document.getElementById('connection-status').style.color = 'red';
+                    
+                    // Add to console output
+                    const output = document.getElementById('console-output');
+                    output.innerHTML += '❌ Connection error: ' + error.message + '<br>';
+                });
+        });
+    </script>
+</body>
+</html>
