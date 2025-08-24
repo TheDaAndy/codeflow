@@ -10,7 +10,6 @@ class MockMCPServer {
         this.port = port;
         this.app = express();
         this.server = http.createServer(this.app);
-        this.wss = new WebSocket.Server({ server: this.server });
         this.clients = new Map();
         this.terminalServer = new TerminalServer();
         this.projectManager = new ProjectManager();
@@ -221,40 +220,9 @@ class MockMCPServer {
     }
 
     setupWebSocket() {
-        this.wss.on('connection', (ws, req) => {
-            const clientId = uuid();
-            this.clients.set(clientId, ws);
-
-            console.log(`Client ${clientId} connected`);
-
-            ws.on('message', async (message) => {
-                try {
-                    const data = JSON.parse(message);
-                    ws.send(JSON.stringify({
-                        type: 'echo',
-                        data,
-                        clientId
-                    }));
-                } catch (error) {
-                    ws.send(JSON.stringify({
-                        type: 'error',
-                        error: error.message
-                    }));
-                }
-            });
-
-            ws.on('close', () => {
-                this.clients.delete(clientId);
-                console.log(`Client ${clientId} disconnected`);
-            });
-
-            // Send welcome message
-            ws.send(JSON.stringify({
-                type: 'connected',
-                clientId,
-                message: 'Connected to CodeFlow Mock MCP Server'
-            }));
-        });
+        // WebSocket routing is now handled by the terminal server
+        // This method is kept for compatibility but doesn't create a conflicting server
+        console.log('WebSocket routing delegated to terminal server');
     }
 
     setupTerminal() {
