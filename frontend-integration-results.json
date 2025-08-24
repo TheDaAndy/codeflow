@@ -1,0 +1,221 @@
+{
+  "summary": {
+    "total": 21,
+    "passed": 21,
+    "failed": 0,
+    "successRate": "100.0"
+  },
+  "results": [
+    {
+      "name": "JS Component: CodeFlowIDE Class",
+      "passed": true,
+      "details": {
+        "pattern": "/class CodeFlowIDE/",
+        "found": true
+      },
+      "timestamp": "2025-08-24T18:24:13.511Z"
+    },
+    {
+      "name": "JS Component: WebSocket Setup",
+      "passed": true,
+      "details": {
+        "pattern": "/setupTerminalWebSocket/",
+        "found": true
+      },
+      "timestamp": "2025-08-24T18:24:13.531Z"
+    },
+    {
+      "name": "JS Component: Connection Status Update",
+      "passed": true,
+      "details": {
+        "pattern": "/updateConnectionStatus/",
+        "found": true
+      },
+      "timestamp": "2025-08-24T18:24:13.531Z"
+    },
+    {
+      "name": "JS Component: Terminal Initialization",
+      "passed": true,
+      "details": {
+        "pattern": "/initializeTerminal/",
+        "found": true
+      },
+      "timestamp": "2025-08-24T18:24:13.531Z"
+    },
+    {
+      "name": "JS Component: Event Listeners Setup",
+      "passed": true,
+      "details": {
+        "pattern": "/setupEventListeners/",
+        "found": true
+      },
+      "timestamp": "2025-08-24T18:24:13.531Z"
+    },
+    {
+      "name": "JS Component: MCP Server Connection",
+      "passed": true,
+      "details": {
+        "pattern": "/connectToMCPServer/",
+        "found": true
+      },
+      "timestamp": "2025-08-24T18:24:13.531Z"
+    },
+    {
+      "name": "JS Component: DOMContentLoaded Handler",
+      "passed": true,
+      "details": {
+        "pattern": "/DOMContentLoaded/",
+        "found": true
+      },
+      "timestamp": "2025-08-24T18:24:13.531Z"
+    },
+    {
+      "name": "JS Syntax Check (Braces)",
+      "passed": true,
+      "details": {
+        "openBraces": 174,
+        "closeBraces": 174,
+        "balanced": true
+      },
+      "timestamp": "2025-08-24T18:24:13.532Z"
+    },
+    {
+      "name": "DOM Interaction: Connection Text Element",
+      "passed": true,
+      "details": {
+        "canInteract": true
+      },
+      "timestamp": "2025-08-24T18:24:13.955Z"
+    },
+    {
+      "name": "DOM Interaction: Connection Indicator Class",
+      "passed": true,
+      "details": {
+        "canInteract": true
+      },
+      "timestamp": "2025-08-24T18:24:13.957Z"
+    },
+    {
+      "name": "DOM Interaction: Terminal Element Interaction",
+      "passed": true,
+      "details": {
+        "canInteract": true
+      },
+      "timestamp": "2025-08-24T18:24:13.958Z"
+    },
+    {
+      "name": "DOM Interaction: Event Listener Attachment",
+      "passed": true,
+      "details": {
+        "canInteract": true
+      },
+      "timestamp": "2025-08-24T18:24:13.962Z"
+    },
+    {
+      "name": "WebSocket Full Integration",
+      "passed": true,
+      "details": {
+        "connection": true,
+        "terminalCreation": true,
+        "messageHandling": true,
+        "protocolCompliance": true
+      },
+      "timestamp": "2025-08-24T18:24:15.029Z"
+    },
+    {
+      "name": "CSS Rule: Full Width Terminal",
+      "passed": true,
+      "details": {
+        "pattern": "/\\.left-panel[\\s\\S]*width:\\s*100%/",
+        "found": true
+      },
+      "timestamp": "2025-08-24T18:24:15.040Z"
+    },
+    {
+      "name": "CSS Rule: Hidden Right Panel",
+      "passed": true,
+      "details": {
+        "pattern": "/\\.right-panel[\\s\\S]*display:\\s*none/",
+        "found": true
+      },
+      "timestamp": "2025-08-24T18:24:15.040Z"
+    },
+    {
+      "name": "CSS Rule: Connection Status Colors",
+      "passed": true,
+      "details": {
+        "pattern": "/\\.connected.*color/",
+        "found": true
+      },
+      "timestamp": "2025-08-24T18:24:15.041Z"
+    },
+    {
+      "name": "CSS Rule: Terminal Styling",
+      "passed": true,
+      "details": {
+        "pattern": "/\\.terminal/",
+        "found": true
+      },
+      "timestamp": "2025-08-24T18:24:15.041Z"
+    },
+    {
+      "name": "CSS Rule: Dark Theme Variables",
+      "passed": true,
+      "details": {
+        "pattern": "/--primary-bg/",
+        "found": true
+      },
+      "timestamp": "2025-08-24T18:24:15.041Z"
+    },
+    {
+      "name": "CSS Rule: Responsive Layout",
+      "passed": true,
+      "details": {
+        "pattern": "/@media/",
+        "found": true
+      },
+      "timestamp": "2025-08-24T18:24:15.041Z"
+    },
+    {
+      "name": "CSS File Completeness",
+      "passed": true,
+      "details": {
+        "size": 13413,
+        "substantial": true
+      },
+      "timestamp": "2025-08-24T18:24:15.041Z"
+    },
+    {
+      "name": "End-to-End Flow",
+      "passed": true,
+      "details": {
+        "steps": [
+          {
+            "step": "Load Project Selector",
+            "success": true
+          },
+          {
+            "step": "Navigate to IDE",
+            "success": true
+          },
+          {
+            "step": "Load Assets",
+            "success": true
+          },
+          {
+            "step": "Server Health",
+            "success": true
+          },
+          {
+            "step": "MCP Tools Available",
+            "success": true
+          }
+        ],
+        "allPass": true
+      },
+      "timestamp": "2025-08-24T18:24:15.067Z"
+    }
+  ],
+  "timestamp": "2025-08-24T18:24:15.068Z",
+  "testType": "Frontend Integration (Headless Compatible)"
+}

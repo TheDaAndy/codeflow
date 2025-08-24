@@ -11,6 +11,7 @@
     "test:watch": "jest --watch",
     "test:playwright": "playwright test",
     "test:browser": "node tests/browser-simulation.js",
+    "test:frontend": "node tests/frontend-integration.js",
     "test:all": "node tests/run-tests.js",
     "test:ui": "playwright test --ui",
     "lint": "eslint src/ || echo 'Linting skipped'"
