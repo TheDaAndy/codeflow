@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeFlow - Project Selection</title>
+    <link rel="stylesheet" href="project-selector.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="project-selector-container">
+        <!-- Header -->
+        <header class="selector-header">
+            <div class="logo">
+                <i class="fas fa-code-branch"></i>
+                <span>CodeFlow</span>
+            </div>
+            <div class="subtitle">Select or Create a Project</div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="selector-main">
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <button id="new-project-btn" class="action-btn primary">
+                    <i class="fas fa-plus"></i>
+                    <span>New Project</span>
+                </button>
+                <button id="import-project-btn" class="action-btn">
+                    <i class="fas fa-folder-open"></i>
+                    <span>Import Project</span>
+                </button>
+                <button id="refresh-projects-btn" class="action-btn">
+                    <i class="fas fa-sync-alt"></i>
+                    <span>Refresh</span>
+                </button>
+            </div>
+
+            <!-- Project Categories -->
+            <div class="project-categories">
+                <div class="category-tabs">
+                    <button class="tab-btn active" data-category="recent">
+                        <i class="fas fa-clock"></i> Recent
+                    </button>
+                    <button class="tab-btn" data-category="favorites">
+                        <i class="fas fa-star"></i> Favorites
+                    </button>
+                    <button class="tab-btn" data-category="all">
+                        <i class="fas fa-folder"></i> All Projects
+                    </button>
+                </div>
+
+                <!-- Storage Location Selector -->
+                <div class="storage-selector">
+                    <label for="storage-location">Storage Location:</label>
+                    <select id="storage-location">
+                        <option value="/data/data/com.termux/files/home/projects">Internal (Termux)</option>
+                        <option value="/storage/emulated/0/CodeFlow">SD Card (Public)</option>
+                        <option value="/sdcard/CodeFlow">SD Card</option>
+                        <option value="custom">Custom Path...</option>
+                    </select>
+                    <input type="text" id="custom-path" class="custom-path-input" placeholder="/path/to/projects" style="display: none;">
+                </div>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="projects-container">
+                <div id="projects-grid" class="projects-grid">
+                    <!-- Projects will be loaded here -->
+                    <div class="loading-state">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Loading projects...</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="selector-footer">
+            <div class="footer-info">
+                <span>CodeFlow IDE - Local Development Environment</span>
+            </div>
+            <div class="footer-actions">
+                <button id="settings-btn" class="footer-btn">
+                    <i class="fas fa-cog"></i> Settings
+                </button>
+                <button id="help-btn" class="footer-btn">
+                    <i class="fas fa-question-circle"></i> Help
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <!-- New Project Modal -->
+    <div id="new-project-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-plus"></i> Create New Project</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="new-project-form">
+                    <div class="form-group">
+                        <label for="project-name">Project Name</label>
+                        <input type="text" id="project-name" placeholder="my-awesome-project" required>
+                        <small>Used as folder name (lowercase, hyphens allowed)</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="project-description">Description</label>
+                        <textarea id="project-description" placeholder="Brief description of your project" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="project-type">Project Type</label>
+                        <select id="project-type">
+                            <option value="empty">Empty Project</option>
+                            <option value="web">Web Application</option>
+                            <option value="node">Node.js Project</option>
+                            <option value="python">Python Project</option>
+                            <option value="react">React App</option>
+                            <option value="vue">Vue.js App</option>
+                            <option value="static">Static Website</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="project-location">Location</label>
+                        <select id="project-location">
+                            <option value="/data/data/com.termux/files/home/projects">Internal Storage</option>
+                            <option value="/storage/emulated/0/CodeFlow">SD Card (Public)</option>
+                            <option value="/sdcard/CodeFlow">SD Card</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="init-git"> Initialize Git Repository
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="create-readme"> Create README.md
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn secondary" id="cancel-project">Cancel</button>
+                <button type="submit" form="new-project-form" class="btn primary" id="create-project">
+                    <i class="fas fa-plus"></i> Create Project
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import Project Modal -->
+    <div id="import-project-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-folder-open"></i> Import Existing Project</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="import-options">
+                    <div class="import-option" data-type="folder">
+                        <i class="fas fa-folder"></i>
+                        <h4>Local Folder</h4>
+                        <p>Import an existing project folder</p>
+                    </div>
+                    <div class="import-option" data-type="git">
+                        <i class="fab fa-git-alt"></i>
+                        <h4>Git Repository</h4>
+                        <p>Clone from Git URL</p>
+                    </div>
+                    <div class="import-option" data-type="zip">
+                        <i class="fas fa-file-archive"></i>
+                        <h4>ZIP Archive</h4>
+                        <p>Extract project from ZIP</p>
+                    </div>
+                </div>
+
+                <form id="import-form" style="display: none;">
+                    <div class="form-group" id="folder-input-group">
+                        <label for="folder-path">Project Folder Path</label>
+                        <input type="text" id="folder-path" placeholder="/path/to/existing/project">
+                    </div>
+
+                    <div class="form-group" id="git-input-group">
+                        <label for="git-url">Git Repository URL</label>
+                        <input type="url" id="git-url" placeholder="https://github.com/user/repo.git">
+                    </div>
+
+                    <div class="form-group" id="zip-input-group">
+                        <label for="zip-file">ZIP File Path</label>
+                        <input type="text" id="zip-file" placeholder="/path/to/project.zip">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="import-name">Project Name</label>
+                        <input type="text" id="import-name" placeholder="imported-project" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn secondary" id="cancel-import">Cancel</button>
+                <button type="submit" form="import-form" class="btn primary" id="import-project" style="display: none;">
+                    <i class="fas fa-download"></i> Import Project
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="project-selector.js"></script>
+</body>
+</html>

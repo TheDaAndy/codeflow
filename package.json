@@ -1,0 +1,51 @@
+{
+  "name": "codeflow",
+  "version": "1.0.0",
+  "description": "Local development environment with integrated terminal and browser automation",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "node src/mcp/server-standalone.js",
+    "dev": "node src/mcp/server-standalone.js --dev",
+    "build": "echo 'Build script placeholder'",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "lint": "eslint src/ || echo 'Linting skipped'"
+  },
+  "keywords": [
+    "electron",
+    "development",
+    "terminal",
+    "browser",
+    "automation",
+    "claude-code"
+  ],
+  "author": "CodeFlow",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "eslint": "^8.56.0",
+    "node-fetch": "^3.3.2"
+  },
+  "optionalDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1",
+    "puppeteer": "^21.9.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "ws": "^8.16.0",
+    "uuid": "^9.0.1"
+  },
+  "build": {
+    "appId": "com.codeflow.app",
+    "productName": "CodeFlow",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "node_modules/**/*"
+    ]
+  }
+}

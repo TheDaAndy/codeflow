@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeFlow IDE - Local Development Environment</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/xterm/5.3.0/xterm.min.css">
+</head>
+<body>
+    <div class="ide-container">
+        <!-- Header Bar -->
+        <header class="header-bar">
+            <div class="header-left">
+                <div class="logo">
+                    <i class="fas fa-code-branch"></i>
+                    <span>CodeFlow IDE</span>
+                </div>
+                <div class="connection-status">
+                    <i id="connection-indicator" class="fas fa-circle connecting"></i>
+                    <span id="connection-text">Connecting...</span>
+                </div>
+            </div>
+            
+            <div class="header-center">
+                <div class="current-url-display">
+                    <i class="fas fa-globe"></i>
+                    <span id="current-page-url">about:blank</span>
+                </div>
+            </div>
+            
+            <div class="header-right">
+                <button id="toggle-layout" class="header-btn" title="Toggle Layout">
+                    <i class="fas fa-th-large"></i>
+                </button>
+                <button id="clear-terminal" class="header-btn" title="Clear Terminal">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+                <button id="settings-btn" class="header-btn" title="Settings">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Left Panel - Terminal -->
+            <div class="left-panel panel">
+                <div class="panel-header">
+                    <h3><i class="fas fa-terminal"></i> Full Shell Terminal</h3>
+                    <div class="panel-controls">
+                        <button id="new-terminal-session" class="control-btn" title="New Terminal">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <button id="terminal-settings" class="control-btn" title="Terminal Settings">
+                            <i class="fas fa-sliders-h"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="terminal-container">
+                    <div id="terminal" class="terminal-instance"></div>
+                </div>
+                
+                <div class="terminal-status-bar">
+                    <div class="status-left">
+                        <span id="terminal-status">Connecting...</span>
+                    </div>
+                    <div class="status-right">
+                        <span class="terminal-info">
+                            <i class="fas fa-info-circle"></i>
+                            Use "claude" command for CodeFlow tools
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resizer -->
+            <div class="resizer vertical-resizer" id="vertical-resizer"></div>
+
+            <!-- Right Panel - Browser -->
+            <div class="right-panel panel">
+                <div class="panel-header">
+                    <h3><i class="fas fa-globe"></i> Controlled Browser</h3>
+                    <div class="browser-controls">
+                        <button id="browser-back" class="control-btn" title="Back">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                        <button id="browser-forward" class="control-btn" title="Forward">
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <button id="browser-refresh" class="control-btn" title="Refresh">
+                            <i class="fas fa-redo"></i>
+                        </button>
+                        
+                        <div class="url-input-container">
+                            <input type="text" id="url-input" placeholder="https://example.com" autocomplete="off">
+                            <button id="navigate-btn" class="control-btn primary">
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                        
+                        <button id="take-screenshot" class="control-btn" title="Screenshot">
+                            <i class="fas fa-camera"></i>
+                        </button>
+                        <button id="browser-devtools" class="control-btn" title="Inspect Mode">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="browser-content">
+                    <!-- Browser Tabs -->
+                    <div class="browser-tabs">
+                        <div class="tab active" data-tab="browser">
+                            <i class="fas fa-eye"></i> Browser View
+                        </div>
+                        <div class="tab" data-tab="console">
+                            <i class="fas fa-bug"></i> Console
+                        </div>
+                        <div class="tab" data-tab="network">
+                            <i class="fas fa-network-wired"></i> Network
+                        </div>
+                        <div class="tab" data-tab="elements">
+                            <i class="fas fa-code"></i> Elements
+                        </div>
+                    </div>
+
+                    <!-- Tab Content -->
+                    <div class="tab-content">
+                        <!-- Browser View -->
+                        <div id="browser-tab" class="tab-pane active">
+                            <div class="browser-frame-container">
+                                <iframe id="browser-frame" src="about:blank" sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox"></iframe>
+                                <div class="browser-overlay" id="browser-overlay">
+                                    <div class="loading-spinner">
+                                        <i class="fas fa-spinner fa-spin"></i>
+                                        <p>Loading...</p>
+                                    </div>
+                                </div>
+                                <!-- AI Control Overlay -->
+                                <div class="ai-control-overlay" id="ai-control-overlay">
+                                    <div class="ai-action-indicator">
+                                        <i class="fas fa-robot"></i>
+                                        <span id="ai-action-text">AI is controlling the browser...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Console Tab -->
+                        <div id="console-tab" class="tab-pane">
+                            <div class="console-header">
+                                <button id="clear-console" class="control-btn">
+                                    <i class="fas fa-trash"></i> Clear Console
+                                </button>
+                                <select id="console-filter">
+                                    <option value="all">All</option>
+                                    <option value="errors">Errors</option>
+                                    <option value="warnings">Warnings</option>
+                                    <option value="logs">Logs</option>
+                                </select>
+                            </div>
+                            <div id="console-output" class="console-output"></div>
+                        </div>
+
+                        <!-- Network Tab -->
+                        <div id="network-tab" class="tab-pane">
+                            <div class="network-header">
+                                <button id="clear-network" class="control-btn">
+                                    <i class="fas fa-trash"></i> Clear Network
+                                </button>
+                                <div class="network-stats">
+                                    <span>Requests: <span id="request-count">0</span></span>
+                                    <span>Data: <span id="data-transferred">0 KB</span></span>
+                                </div>
+                            </div>
+                            <div id="network-output" class="network-output">
+                                <div class="network-table">
+                                    <div class="table-header">
+                                        <div class="col-method">Method</div>
+                                        <div class="col-url">URL</div>
+                                        <div class="col-status">Status</div>
+                                        <div class="col-size">Size</div>
+                                        <div class="col-time">Time</div>
+                                    </div>
+                                    <div id="network-requests" class="table-body"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Elements Tab -->
+                        <div id="elements-tab" class="tab-pane">
+                            <div class="elements-header">
+                                <button id="refresh-elements" class="control-btn">
+                                    <i class="fas fa-redo"></i> Refresh DOM
+                                </button>
+                                <button id="highlight-mode" class="control-btn">
+                                    <i class="fas fa-highlighter"></i> Highlight Mode
+                                </button>
+                            </div>
+                            <div id="elements-tree" class="elements-tree"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="browser-status-bar">
+                    <div class="status-left">
+                        <span id="page-status">Ready</span>
+                        <span id="page-load-time" class="load-time"></span>
+                    </div>
+                    <div class="status-right">
+                        <span id="page-dimensions">1920x1080</span>
+                        <span id="zoom-level">100%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Activity Log (Bottom Panel) -->
+        <div class="bottom-panel panel collapsible" id="activity-panel">
+            <div class="panel-header">
+                <h3><i class="fas fa-list-ul"></i> Activity Log</h3>
+                <div class="panel-controls">
+                    <button id="toggle-activity" class="control-btn">
+                        <i class="fas fa-chevron-up"></i>
+                    </button>
+                    <button id="clear-activity" class="control-btn">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="activity-content">
+                <div id="activity-log" class="activity-log"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>CodeFlow Settings</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-group">
+                    <label>MCP Server URL:</label>
+                    <input type="text" id="mcp-server-url" value="http://localhost:3001">
+                </div>
+                <div class="setting-group">
+                    <label>Terminal Theme:</label>
+                    <select id="terminal-theme">
+                        <option value="dark">Dark</option>
+                        <option value="light">Light</option>
+                        <option value="solarized">Solarized</option>
+                    </select>
+                </div>
+                <div class="setting-group">
+                    <label>Auto-screenshot on AI actions:</label>
+                    <input type="checkbox" id="auto-screenshot" checked>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="save-settings" class="btn primary">Save Settings</button>
+                <button id="cancel-settings" class="btn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/5.3.0/xterm.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/5.3.0/addons/fit/xterm-addon-fit.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

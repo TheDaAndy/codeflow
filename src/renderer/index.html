@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeFlow</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <i class="fas fa-code-branch"></i>
+                    <span>CodeFlow</span>
+                </div>
+            </div>
+            <div class="header-center">
+                <div class="project-info">
+                    <span id="project-name">No Project</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <button id="toggle-terminal" class="header-btn" title="Toggle Terminal">
+                    <i class="fas fa-terminal"></i>
+                </button>
+                <button id="toggle-browser" class="header-btn" title="Toggle Browser">
+                    <i class="fas fa-globe"></i>
+                </button>
+                <button id="settings" class="header-btn" title="Settings">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="split-container">
+                <div class="left-panel" id="left-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-terminal"></i> Terminal</h3>
+                        <div class="panel-controls">
+                            <button id="new-terminal" class="control-btn" title="New Terminal">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                            <button id="clear-terminal" class="control-btn" title="Clear Terminal">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="terminal-container">
+                        <div id="terminal"></div>
+                    </div>
+                    <div class="terminal-status">
+                        <span id="terminal-status">Ready</span>
+                        <div class="terminal-info">
+                            <span id="terminal-cwd">~</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="resize-handle" id="resize-handle"></div>
+
+                <div class="right-panel" id="right-panel">
+                    <div class="panel-header">
+                        <h3><i class="fas fa-globe"></i> Browser</h3>
+                        <div class="browser-controls">
+                            <button id="browser-back" class="control-btn" title="Back">
+                                <i class="fas fa-arrow-left"></i>
+                            </button>
+                            <button id="browser-forward" class="control-btn" title="Forward">
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                            <button id="browser-refresh" class="control-btn" title="Refresh">
+                                <i class="fas fa-redo"></i>
+                            </button>
+                            <div class="url-bar">
+                                <input type="text" id="url-input" placeholder="Enter URL or localhost:3000">
+                                <button id="navigate-btn" class="control-btn">
+                                    <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                            <button id="browser-devtools" class="control-btn" title="DevTools">
+                                <i class="fas fa-tools"></i>
+                            </button>
+                            <button id="browser-screenshot" class="control-btn" title="Screenshot">
+                                <i class="fas fa-camera"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="browser-container">
+                        <div class="browser-tabs">
+                            <div class="tab active" data-tab="preview">
+                                <i class="fas fa-eye"></i> Preview
+                            </div>
+                            <div class="tab" data-tab="console">
+                                <i class="fas fa-bug"></i> Console
+                            </div>
+                            <div class="tab" data-tab="network">
+                                <i class="fas fa-network-wired"></i> Network
+                            </div>
+                        </div>
+
+                        <div class="tab-content">
+                            <div id="preview-tab" class="tab-pane active">
+                                <div id="browser-frame">
+                                    <div class="browser-loading">
+                                        <i class="fas fa-spinner fa-spin"></i>
+                                        <p>Browser ready</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="console-tab" class="tab-pane">
+                                <div class="console-header">
+                                    <button id="clear-console" class="control-btn">
+                                        <i class="fas fa-trash"></i> Clear
+                                    </button>
+                                </div>
+                                <div id="console-output"></div>
+                            </div>
+
+                            <div id="network-tab" class="tab-pane">
+                                <div class="network-header">
+                                    <button id="clear-network" class="control-btn">
+                                        <i class="fas fa-trash"></i> Clear
+                                    </button>
+                                </div>
+                                <div id="network-output"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="browser-status">
+                        <span id="browser-status">Ready</span>
+                        <div class="browser-info">
+                            <span id="current-url">about:blank</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-left">
+                <span id="connection-status">
+                    <i class="fas fa-circle status-indicator connected"></i>
+                    Connected
+                </span>
+            </div>
+            <div class="footer-center">
+                <span id="mcp-status">MCP Server: Ready</span>
+            </div>
+            <div class="footer-right">
+                <span id="app-version">v1.0.0</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://unpkg.com/xterm@5.3.0/lib/xterm.js"></script>
+    <script src="https://unpkg.com/xterm-addon-fit@0.8.0/lib/xterm-addon-fit.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/xterm@5.3.0/css/xterm.css" />
+    <script src="app.js"></script>
+</body>
+</html>

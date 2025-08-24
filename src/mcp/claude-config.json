@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "codeflow-browser": {
+      "command": "node",
+      "args": [
+        "/data/data/com.termux/files/home/projects/codeflow/src/mcp/mcp-client.js"
+      ],
+      "env": {
+        "CODEFLOW_MCP_PORT": "3001",
+        "CODEFLOW_MCP_HOST": "localhost"
+      }
+    }
+  }
+}
