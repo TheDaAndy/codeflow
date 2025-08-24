@@ -371,9 +371,26 @@ class TerminalServer {
     }
 
     async handleInput(ws, data) {
+        if (!data || typeof data !== 'object') {
+            console.warn('handleInput: Invalid data received');
+            ws.send(JSON.stringify({
+                type: 'error',
+                data: 'Invalid input data'
+            }));
+            return;
+        }
+        
         const { terminalId, input } = data;
+        if (!terminalId) {
+            console.warn('handleInput: Missing terminalId');
+            ws.send(JSON.stringify({
+                type: 'error',
+                data: 'Missing terminal ID'
+            }));
+            return;
+        }
+        
         const terminal = this.terminals.get(terminalId);
-
         if (!terminal) {
             ws.send(JSON.stringify({
                 type: 'error',
@@ -387,9 +404,18 @@ class TerminalServer {
     }
 
     async resizeTerminal(ws, data) {
+        if (!data || typeof data !== 'object') {
+            console.warn('resizeTerminal: Invalid data received');
+            return;
+        }
+        
         const { terminalId, cols, rows } = data;
+        if (!terminalId) {
+            console.warn('resizeTerminal: Missing terminalId');
+            return;
+        }
+        
         const terminal = this.terminals.get(terminalId);
-
         if (!terminal || !terminal.process.resize) {
             return;
         }
@@ -402,9 +428,18 @@ class TerminalServer {
     }
 
     async destroyTerminal(ws, data) {
+        if (!data || typeof data !== 'object') {
+            console.warn('destroyTerminal: Invalid data received');
+            return;
+        }
+        
         const { terminalId } = data;
+        if (!terminalId) {
+            console.warn('destroyTerminal: Missing terminalId');
+            return;
+        }
+        
         const terminal = this.terminals.get(terminalId);
-
         if (!terminal) {
             return;
         }

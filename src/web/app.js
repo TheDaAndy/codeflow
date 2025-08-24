@@ -1,6 +1,5 @@
 class CodeFlowIDE {
     constructor() {
-        console.log('🔧 CodeFlowIDE constructor called');
         this.mcpServerUrl = 'http://localhost:3001';
         this.websocket = null;
         this.terminal = null;
@@ -12,7 +11,6 @@ class CodeFlowIDE {
         this.networkRequests = [];
         this.activityLog = [];
         
-        console.log('🎯 Starting initialization...');
         this.init();
     }
 
@@ -228,9 +226,11 @@ class CodeFlowIDE {
         if (this.terminalWs && this.terminalWs.readyState === WebSocket.OPEN && this.terminalId) {
             this.terminalWs.send(JSON.stringify({
                 type: 'resize',
-                terminalId: this.terminalId,
-                cols: this.terminal.cols,
-                rows: this.terminal.rows
+                data: {
+                    terminalId: this.terminalId,
+                    cols: this.terminal.cols,
+                    rows: this.terminal.rows
+                }
             }));
         }
     }
@@ -703,10 +703,7 @@ class CodeFlowIDE {
 
 // Initialize the IDE when the page loads
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('🚀 CodeFlow IDE JavaScript loaded and executing');
-    console.log('🔗 Initializing CodeFlow IDE...');
     window.codeFlowIDE = new CodeFlowIDE();
-    console.log('✅ CodeFlow IDE initialized');
 });
 
 // Handle page visibility changes
