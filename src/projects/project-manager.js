@@ -5,9 +5,7 @@ const { spawn } = require('child_process');
 class ProjectManager {
     constructor() {
         this.projectPaths = [
-            '/data/data/com.termux/files/home/projects',
-            '/storage/emulated/0/CodeFlow',
-            '/sdcard/CodeFlow'
+            '/data/data/com.termux/files/home/projects'
         ];
         this.projects = new Map();
         this.recentProjects = [];
