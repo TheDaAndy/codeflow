@@ -154,6 +154,7 @@ async function startServer() {
         console.log('   • browser_get_dom      - Get DOM structure');
         console.log('');
         console.log('📖 Documentation: See CLAUDE.md for full usage guide');
+console.log('🔥 Hot reload enabled - changes will restart server automatically');
         console.log('');
     } catch (error) {
         console.error('❌ Failed to start server:', error);
