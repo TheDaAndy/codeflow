@@ -1,0 +1,147 @@
+{
+  "summary": {
+    "total": 14,
+    "passed": 14,
+    "failed": 0,
+    "successRate": "100.0"
+  },
+  "results": [
+    {
+      "name": "Server Health Check",
+      "passed": true,
+      "details": {
+        "status": "ok",
+        "statusCode": 200
+      },
+      "timestamp": "2025-08-24T18:20:34.049Z"
+    },
+    {
+      "name": "HTML Page Loading",
+      "passed": true,
+      "details": {
+        "statusCode": 200,
+        "hasTitle": true,
+        "hasTerminal": true,
+        "hasScript": true
+      },
+      "timestamp": "2025-08-24T18:20:34.057Z"
+    },
+    {
+      "name": "Static Resource /app.js",
+      "passed": true,
+      "details": {
+        "statusCode": 200,
+        "size": 25964
+      },
+      "timestamp": "2025-08-24T18:20:34.063Z"
+    },
+    {
+      "name": "Static Resource /styles.css",
+      "passed": true,
+      "details": {
+        "statusCode": 200,
+        "size": 13413
+      },
+      "timestamp": "2025-08-24T18:20:34.068Z"
+    },
+    {
+      "name": "DOM Element: IDE Container",
+      "passed": true,
+      "details": {
+        "selector": ".ide-container",
+        "found": true
+      },
+      "timestamp": "2025-08-24T18:20:34.322Z"
+    },
+    {
+      "name": "DOM Element: Header Bar",
+      "passed": true,
+      "details": {
+        "selector": ".header-bar",
+        "found": true
+      },
+      "timestamp": "2025-08-24T18:20:34.323Z"
+    },
+    {
+      "name": "DOM Element: Terminal Element",
+      "passed": true,
+      "details": {
+        "selector": "#terminal",
+        "found": true
+      },
+      "timestamp": "2025-08-24T18:20:34.326Z"
+    },
+    {
+      "name": "DOM Element: Connection Status",
+      "passed": true,
+      "details": {
+        "selector": "#connection-text",
+        "found": true
+      },
+      "timestamp": "2025-08-24T18:20:34.328Z"
+    },
+    {
+      "name": "DOM Element: Connection Indicator",
+      "passed": true,
+      "details": {
+        "selector": "#connection-indicator",
+        "found": true
+      },
+      "timestamp": "2025-08-24T18:20:34.329Z"
+    },
+    {
+      "name": "DOM Element: Left Panel",
+      "passed": true,
+      "details": {
+        "selector": ".left-panel",
+        "found": true
+      },
+      "timestamp": "2025-08-24T18:20:34.330Z"
+    },
+    {
+      "name": "DOM Element: App Script",
+      "passed": true,
+      "details": {
+        "selector": "script[src=\"app.js\"]",
+        "found": true
+      },
+      "timestamp": "2025-08-24T18:20:34.333Z"
+    },
+    {
+      "name": "Right Panel Hidden",
+      "passed": true,
+      "details": {
+        "selector": ".right-panel",
+        "note": "Should exist in HTML but be hidden via CSS"
+      },
+      "timestamp": "2025-08-24T18:20:34.334Z"
+    },
+    {
+      "name": "WebSocket Connection",
+      "passed": true,
+      "details": {
+        "connected": true,
+        "receivedWelcome": true,
+        "terminalCreated": true,
+        "terminalId": "4575d809-b694-4d4f-bb5b-8b04fe2344b6"
+      },
+      "timestamp": "2025-08-24T18:20:34.350Z"
+    },
+    {
+      "name": "MCP Tools Endpoint",
+      "passed": true,
+      "details": {
+        "statusCode": 200,
+        "toolCount": 4,
+        "tools": [
+          "browser_navigate",
+          "browser_click",
+          "browser_screenshot",
+          "browser_get_content"
+        ]
+      },
+      "timestamp": "2025-08-24T18:20:34.355Z"
+    }
+  ],
+  "timestamp": "2025-08-24T18:20:34.356Z"
+}

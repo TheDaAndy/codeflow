@@ -115,30 +115,55 @@ class CodeFlowTestRunner {
         }
     }
 
-    async runPlaywrightTests() {
-        console.log('\n🎭 Running Playwright browser tests...');
+    async runBrowserTests() {
+        // Check if we're on Android (Termux) where Playwright doesn't work
+        const isAndroid = process.platform === 'android' || process.env.TERMUX_VERSION;
         
-        try {
-            // Install Playwright browsers if needed
-            console.log('Installing Playwright browsers...');
-            await this.runCommand('npx', ['playwright', 'install', '--with-deps']);
-            
-            // Run Playwright tests
-            const exitCode = await this.runCommand('npx', ['playwright', 'test']);
-            
-            this.testResults.playwright = {
-                passed: exitCode === 0,
-                exitCode
-            };
-            
-            return exitCode === 0;
-        } catch (error) {
-            console.error('Playwright tests failed:', error.message);
-            this.testResults.playwright = {
-                passed: false,
-                error: error.message
-            };
-            return false;
+        if (isAndroid) {
+            console.log('\n📱 Running Android-compatible browser simulation tests...');
+            try {
+                const exitCode = await this.runCommand('node', ['tests/browser-simulation.js']);
+                this.testResults.browser = {
+                    passed: exitCode === 0,
+                    exitCode,
+                    type: 'simulation'
+                };
+                return exitCode === 0;
+            } catch (error) {
+                console.error('Browser simulation tests failed:', error.message);
+                this.testResults.browser = {
+                    passed: false,
+                    error: error.message,
+                    type: 'simulation'
+                };
+                return false;
+            }
+        } else {
+            console.log('\n🎭 Running Playwright browser tests...');
+            try {
+                // Install Playwright browsers if needed
+                console.log('Installing Playwright browsers...');
+                await this.runCommand('npx', ['playwright', 'install', '--with-deps']);
+                
+                // Run Playwright tests
+                const exitCode = await this.runCommand('npx', ['playwright', 'test']);
+                
+                this.testResults.browser = {
+                    passed: exitCode === 0,
+                    exitCode,
+                    type: 'playwright'
+                };
+                
+                return exitCode === 0;
+            } catch (error) {
+                console.error('Playwright tests failed:', error.message);
+                this.testResults.browser = {
+                    passed: false,
+                    error: error.message,
+                    type: 'playwright'
+                };
+                return false;
+            }
         }
     }
 
@@ -192,9 +217,10 @@ class CodeFlowTestRunner {
             console.log(`${status} Jest Unit Tests`);
         }
         
-        if (report.results.playwright) {
-            const status = report.results.playwright.passed ? '✅' : '❌';
-            console.log(`${status} Playwright Browser Tests`);
+        if (report.results.browser) {
+            const status = report.results.browser.passed ? '✅' : '❌';
+            const type = report.results.browser.type || 'browser';
+            console.log(`${status} Browser Tests (${type})`);
         }
 
         const overallSuccess = report.summary.failed === 0 && report.summary.total > 0;
@@ -222,8 +248,8 @@ class CodeFlowTestRunner {
             // Run Jest tests
             await this.runJestTests();
 
-            // Run Playwright tests
-            await this.runPlaywrightTests();
+            // Run Browser tests (Playwright or simulation based on platform)
+            await this.runBrowserTests();
 
             // Generate report
             const report = await this.generateReport();

@@ -1,0 +1,21 @@
+{
+  "timestamp": "2025-08-24T18:20:34.381Z",
+  "results": {
+    "playwright": null,
+    "jest": {
+      "passed": true,
+      "exitCode": 0
+    },
+    "overall": null,
+    "browser": {
+      "passed": true,
+      "exitCode": 0,
+      "type": "simulation"
+    }
+  },
+  "summary": {
+    "total": 2,
+    "passed": 2,
+    "failed": 0
+  }
+}
