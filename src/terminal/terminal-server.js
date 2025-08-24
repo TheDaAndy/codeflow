@@ -97,12 +97,12 @@ class TerminalServer {
             // Send welcome message
             setTimeout(() => {
                 const welcomeMsg = [
-                    '\\x1b[1;36m╭─────────────────────────────────────────────╮\\x1b[0m\\r\\n',
-                    '\\x1b[1;36m│           CodeFlow Terminal                 │\\x1b[0m\\r\\n', 
-                    '\\x1b[1;36m│  Full shell with Claude Code integration    │\\x1b[0m\\r\\n',
-                    '\\x1b[1;36m╰─────────────────────────────────────────────╯\\x1b[0m\\r\\n',
-                    '\\x1b[1;32mTip: Use "claude" command to start Claude Code\\x1b[0m\\r\\n',
-                    '\\x1b[33mBrowser automation available via MCP server\\x1b[0m\\r\\n\\r\\n'
+                    '\x1b[1;36m╭─────────────────────────────────────────────╮\x1b[0m\r\n',
+                    '\x1b[1;36m│           CodeFlow Terminal                 │\x1b[0m\r\n', 
+                    '\x1b[1;36m│  Full shell with Claude Code integration    │\x1b[0m\r\n',
+                    '\x1b[1;36m╰─────────────────────────────────────────────╯\x1b[0m\r\n',
+                    '\x1b[1;32mTip: Use "claude" command to start Claude Code\x1b[0m\r\n',
+                    '\x1b[33mBrowser automation available via MCP server\x1b[0m\r\n\r\n'
                 ].join('');
 
                 ws.send(JSON.stringify({
@@ -153,7 +153,7 @@ class TerminalServer {
 
     getPrompt(cwd) {
         const dir = path.basename(cwd);
-        return `\\x1b[1;32m${dir}\\x1b[0m $ `;
+        return `\x1b[1;32m${dir}\x1b[0m $ `;
     }
 
     async handleTerminalInput(terminalId, input) {

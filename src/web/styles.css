@@ -127,14 +127,12 @@ body {
 }
 
 .left-panel {
-    width: 40%;
+    width: 100%;
     min-width: 300px;
-    max-width: 60%;
 }
 
 .right-panel {
-    flex: 1;
-    min-width: 400px;
+    display: none;
 }
 
 .bottom-panel {
